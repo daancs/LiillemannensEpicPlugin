@@ -1,0 +1,16 @@
+main: me.Liillemannen.BukkitServer.Main
+name: LiillemannensEpicPlugin
+version: 1.0.5
+author: Liillemannen
+
+commands:
+  Hello:
+  Launch:
+    aliases: lch
+  Doctor:
+    aliases: doc
+  Refill:
+    aliases: ref
+  gm:
+  GodBoots:
+    aliases: gb

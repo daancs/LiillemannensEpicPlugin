@@ -1,5 +1,6 @@
 package me.Liillemannen.BukkitServer;
 
+import com.sun.javafx.iio.gif.GIFImageLoaderFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,11 +9,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -69,19 +72,44 @@ public class Trident implements CommandExecutor, Listener {
 
     }
 
+    public List<String> list = new ArrayList<String>();
+
     @EventHandler()
     public void onClick(PlayerInteractEvent e) {
         if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.TRIDENT))
             if (e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasLore()) {
                 Player player = (Player) e.getPlayer();
                 if (e.getAction() == Action.RIGHT_CLICK_AIR) {
-                    
+                    if (!list.contains(player.getName()))
+                        list.add(player.getName());
+                    return;
                 }
 
                 if (e.getAction() == Action.LEFT_CLICK_AIR) {
                     player.launchProjectile(Fireball.class);
                 }
             }
+        if (list.contains(e.getPlayer().getName())) {
+            list.remove(e.getPlayer().getName());
+        }
+    }
+
+    @EventHandler()
+    public void onLand(ProjectileHitEvent e) {
+        if (e.getEntityType() == EntityType.TRIDENT) {
+            if (e.getEntity().getShooter() instanceof Player) {
+                Player player = (Player) e.getEntity().getShooter();
+                if (list.contains(player.getName())) {
+                    Location loc = e.getEntity().getLocation();
+                    loc.setY(loc.getY() + 1);
+
+                    for (int i = 1; i < 4; i++) {
+                        loc.getWorld().spawnEntity(loc, EntityType.DROWNED);
+                        loc.getWorld().strikeLightningEffect(loc);
+                    }
+                }
+            }
+        }
     }
 
 }

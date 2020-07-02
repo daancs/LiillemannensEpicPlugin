@@ -1,7 +1,8 @@
 main: me.Liillemannen.BukkitServer.Main
 name: LiillemannensEpicPlugin
-version: 1.0.5
+version: 1.0.7
 author: Liillemannen
+api-version: 1.15
 
 commands:
   Hello:
@@ -14,3 +15,6 @@ commands:
   gm:
   GodBoots:
     aliases: gb
+  Trident:
+    aliases: tr
+  ChangeTeam:

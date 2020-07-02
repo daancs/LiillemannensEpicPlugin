@@ -123,18 +123,18 @@ public class ChangeTeam implements CommandExecutor, Listener {
 
     }
 
-    public ItemStack[] changeColor(ItemStack[] a, Color color) {
-        for (int i = 0; i < a.length; i++) {
+    public ItemStack[] changeColor(ItemStack[] armor, Color color) {
+        for (int i = 0; i < armor.length; i++) {
             try {
-                if (a[i].getType() == Material.LEATHER_CHESTPLATE || a[i].getType() == Material.LEATHER_LEGGINGS || a[i].getType() == Material.LEATHER_HELMET || a[i].getType() == Material.LEATHER_BOOTS) {
-                    LeatherArmorMeta meta = (LeatherArmorMeta) a[i].getItemMeta();
+                if (armor[i].getType() == Material.LEATHER_CHESTPLATE || armor[i].getType() == Material.LEATHER_LEGGINGS || armor[i].getType() == Material.LEATHER_HELMET || armor[i].getType() == Material.LEATHER_BOOTS) {
+                    LeatherArmorMeta meta = (LeatherArmorMeta) armor[i].getItemMeta();
                     meta.setColor(color);
-                    a[i].setItemMeta(meta);
+                    armor[i].setItemMeta(meta);
                 }
             } catch (Exception e) {
 
             }
-            return a;
+            return armor;
         }
         return null;
     }

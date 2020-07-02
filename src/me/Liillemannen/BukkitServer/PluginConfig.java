@@ -14,6 +14,13 @@ public class PluginConfig {
         config = main.getConfig();
     }
 
+    public void setPercentage(int percentage, Player sender) {
+        config.set("percentage", percentage);
+
+        main.saveConfig();
+
+        sender.sendMessage(ChatColor.GREEN + "Sleep percentage has been set!");
+    }
 
     public void setSpawn(Player sender) {
         config.set("spawn.world", sender.getWorld().getName());

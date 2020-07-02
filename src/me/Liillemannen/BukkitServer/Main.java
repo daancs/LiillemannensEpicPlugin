@@ -11,6 +11,7 @@ public class Main extends JavaPlugin {
     public Trident trident = new Trident();
     public ChangeTeam changeteam = new ChangeTeam();
     public PluginConfig pluginConfig = new PluginConfig(this);
+    public Sleep sleep = new Sleep(this);
 
 
     @Override
@@ -28,6 +29,7 @@ public class Main extends JavaPlugin {
         this.getCommand("Changeteam").setExecutor(new ChangeTeam());
         this.getCommand("setspawn").setExecutor(new Spawn(this));
         this.getCommand("spawn").setExecutor(new Spawn(this));
+        this.getServer().getPluginManager().registerEvents(sleep, this);
     }
 
     @Override

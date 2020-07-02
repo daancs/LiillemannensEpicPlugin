@@ -1,6 +1,6 @@
 main: me.Liillemannen.BukkitServer.Main
 name: LiillemannensEpicPlugin
-version: 1.0.7
+version: 1.0.9
 author: Liillemannen
 api-version: 1.15
 
@@ -18,3 +18,5 @@ commands:
   Trident:
     aliases: tr
   ChangeTeam:
+  setspawn:
+  Spawn:

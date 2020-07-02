@@ -10,6 +10,7 @@ public class Main extends JavaPlugin {
     public GodBoots godboots = new GodBoots();
     public Trident trident = new Trident();
     public ChangeTeam changeteam = new ChangeTeam();
+    public PluginConfig pluginConfig = new PluginConfig(this);
 
 
     @Override
@@ -25,6 +26,8 @@ public class Main extends JavaPlugin {
         this.getCommand("Trident").setExecutor(new Trident());
         this.getServer().getPluginManager().registerEvents(changeteam, this);
         this.getCommand("Changeteam").setExecutor(new ChangeTeam());
+        this.getCommand("setspawn").setExecutor(new Spawn(this));
+        this.getCommand("spawn").setExecutor(new Spawn(this));
     }
 
     @Override

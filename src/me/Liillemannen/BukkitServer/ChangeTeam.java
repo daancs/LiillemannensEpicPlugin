@@ -134,9 +134,9 @@ public class ChangeTeam implements CommandExecutor, Listener {
             } catch (Exception e) {
 
             }
-            return armor;
+
         }
-        return null;
+        return armor;
     }
 
     public void createInv() {

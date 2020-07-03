@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Sleep implements CommandExecutor, Listener {
 
@@ -38,6 +37,9 @@ public class Sleep implements CommandExecutor, Listener {
                     sender.sendMessage(ChatColor.RED + "Something went wrong.");
                     sender.sendMessage(ChatColor.RED + "Usage: /sleep <integer>");
                 }
+
+            } else if (args.length == 0) {
+                sender.sendMessage(ChatColor.GREEN + "Sleep percentage: " + main.pluginConfig.config.getInt("percentage"));
             }
         }
         return false;
@@ -50,6 +52,10 @@ public class Sleep implements CommandExecutor, Listener {
 
     @EventHandler()
     public void onSleep(PlayerBedEnterEvent event) {
+        if (!(event.getPlayer().getWorld().getTime() > 13000)) {
+            event.getPlayer().sendMessage(ChatColor.RED + "You cannot sleep at day.");
+            return;
+        }
         playersSleeping.add(event.getPlayer().getName());
         System.out.println(playersSleeping);
         Collection playersOnline = main.getServer().getOnlinePlayers();
@@ -58,15 +64,18 @@ public class Sleep implements CommandExecutor, Listener {
         configPercentage = main.pluginConfig.config.getInt("percentage");
 
         if (sleepPercentage >= configPercentage) {
+            event.getPlayer().getWorld().setTime(0);
             Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Wakey wakey, rise and shine! Good morning everyone!");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "set time day");
         } else {
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Player " + event.getPlayer().getName() + " is sleeping. [" + playersSleeping.size() + "/" + playersOnline.size() + "] " + ChatColor.BOLD + sleepPercentage + "% is needed to make it morning.");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Player " + event.getPlayer().getName() + " is sleeping. [" + playersSleeping.size() + "/" + playersOnline.size() + "] " + ChatColor.BOLD + configPercentage + "% is needed to make it morning.");
         }
     }
 
     @EventHandler()
     public void onBedLeave(PlayerBedLeaveEvent event) {
+        if (event.getPlayer().getWorld().getTime() < 13000) {
+            return;
+        }
         playersSleeping.remove(event.getPlayer().getName());
         System.out.println("Players sleeping: " + playersSleeping);
         Collection playersOnline = main.getServer().getOnlinePlayers();

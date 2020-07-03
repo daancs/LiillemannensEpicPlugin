@@ -32,3 +32,5 @@ commands:
     description: Teleports you to spawn.
   Sleep:
     description: Lets you change the sleep percentage.
+  Gamble:
+    description: Lets you gamble at the cost of 3 diamonds.

@@ -12,6 +12,7 @@ public class Main extends JavaPlugin {
     public ChangeTeam changeteam = new ChangeTeam();
     public PluginConfig pluginConfig = new PluginConfig(this);
     public Sleep sleep = new Sleep(this);
+    public Gamble gamble = new Gamble(this);
 
 
     @Override
@@ -31,6 +32,8 @@ public class Main extends JavaPlugin {
         this.getCommand("spawn").setExecutor(new Spawn(this));
         this.getServer().getPluginManager().registerEvents(sleep, this);
         this.getCommand("sleep").setExecutor(sleep);
+        this.getCommand("gamble").setExecutor(gamble);
+        this.getServer().getPluginManager().registerEvents(gamble, this);
     }
 
     @Override

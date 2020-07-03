@@ -43,6 +43,8 @@ public class ChangeTeam implements CommandExecutor, Listener {
         return false;
     }
 
+    //still somehwat broken
+
     @EventHandler()
     public void onClick(InventoryClickEvent e) {
         if (e.getWhoClicked().getInventory().equals(inv)) {

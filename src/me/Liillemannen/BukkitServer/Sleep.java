@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Sleep implements CommandExecutor, Listener {
 
@@ -23,8 +24,6 @@ public class Sleep implements CommandExecutor, Listener {
     public Sleep(Main _main) {
         main = _main;
     }
-
-
 
 
     @Override
@@ -45,7 +44,6 @@ public class Sleep implements CommandExecutor, Listener {
     }
 
 
-
     List<String> playersSleeping = new ArrayList<String>();
     int sleepPercentage;
     int configPercentage;
@@ -55,19 +53,23 @@ public class Sleep implements CommandExecutor, Listener {
         playersSleeping.add(event.getPlayer().getName());
         System.out.println(playersSleeping);
         Collection playersOnline = main.getServer().getOnlinePlayers();
-        sleepPercentage = (int)(((float)playersSleeping.size()/(float)playersOnline.size())*100);
+        sleepPercentage = (int) (((float) playersSleeping.size() / (float) playersOnline.size()) * 100);
         System.out.println(sleepPercentage);
         configPercentage = main.pluginConfig.config.getInt("percentage");
+
         if (sleepPercentage >= configPercentage) {
             Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Wakey wakey, rise and shine! Good morning everyone!");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "set time day");
         } else {
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Player " + event.getPlayer().getName() + " is sleeping. [" + playersSleeping.size() + "/" + playersOnline.size() + "]");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Player " + event.getPlayer().getName() + " is sleeping. [" + playersSleeping.size() + "/" + playersOnline.size() + "] " + ChatColor.BOLD + sleepPercentage + "% is needed to make it morning.");
         }
     }
 
     @EventHandler()
     public void onBedLeave(PlayerBedLeaveEvent event) {
-        
+        playersSleeping.remove(event.getPlayer().getName());
+        System.out.println("Players sleeping: " + playersSleeping);
+        Collection playersOnline = main.getServer().getOnlinePlayers();
+        Bukkit.broadcastMessage(ChatColor.GOLD + "Player " + event.getPlayer().getName() + " just exited the bed. [" + playersSleeping.size() + "/" + playersOnline.size() + "]");
     }
 }

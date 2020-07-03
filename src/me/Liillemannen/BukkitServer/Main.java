@@ -30,6 +30,7 @@ public class Main extends JavaPlugin {
         this.getCommand("setspawn").setExecutor(new Spawn(this));
         this.getCommand("spawn").setExecutor(new Spawn(this));
         this.getServer().getPluginManager().registerEvents(sleep, this);
+        this.getCommand("sleep").setExecutor(sleep);
     }
 
     @Override
